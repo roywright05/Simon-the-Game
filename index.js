@@ -13,13 +13,22 @@ function getRandomNum(){
 function startGame(){
   game[0].classList.add("hide");
   let val = getRandomNum(); //first number selected
-  //game[val].classList.remove(`btn${val}`);
-  game[val].classList.add("colored");//change to a temp flash
-  playBtns[val-1].play();
+
+    game[val].classList.add("selected");//change to a temp flash
+    playBtns[val-1].play();
   console.log(game[val].name);
-  //setTimeout(()=>{alert("Begin");}, 5000); remove classList
+  setTimeout(()=>{
+    game[val].classList.remove("selected");
+  }, 500); //remove classList
+
+  let isEqual = true;
+  // while(isEqual){
+  //
+  //
+  // }
 
 }
+function timeout(){ setTimeout(startGame, 500 );}
 function alerting(){
     blue.play();
     game[1].classList.remove("btn1");
@@ -30,7 +39,7 @@ for(let i = 0; i<game.length; i++){
 
   switch(i){
     case 0:
-      game[i].addEventListener("click", startGame);
+      game[i].addEventListener("click", timeout);
       break;
     case 1:
       game[i].addEventListener("click", alerting);
