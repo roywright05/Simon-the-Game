@@ -48,12 +48,12 @@ else if last value is ==  and  play pattern < game pattern
 function endGame(){
   wrong.play();
   gameScreen.classList.add("selected");
-  setTimeout(()=>{gameScreen.classList.remove("selected")}, 500);
+  setTimeout(()=>{gameScreen.classList.remove("selected")}, 1000);
   title.innerText = "Game Over 🎮";
-  setTimeout(alert("Play again?"), 1000);
+  setTimeout(alert(`Your score: ${inc*1000}\n Play again?`), 1000);
   gamePattern = [];
   playerPattern = [];
-  //inc = 0;
+  inc = 0;
   game[0].classList.remove("hide");
 }
 
@@ -79,28 +79,31 @@ function greenPlay(){
   }
   else{
     playerPattern = [];
-    setTimeout(playGame, 500);
+    setTimeout(playGame, 750);
   }
 }
 function redPlay(){
   red.play();
   game[2].classList.add("selected");
-  setTimeout(()=>{game[2].classList.remove("selected");}, 500);
+  setTimeout(()=>{game[2].classList.remove("selected");}, 750);
   playerPattern.push(game[2].name);
   console.log(`player pattern: ${playerPattern}`);
   console.log(`game pattern: ${gamePattern}`);
 
   if(!checkAll()){
     endGame();
-  }else{
+  }else if(playerPattern.length < gamePattern.length){
+    checkAll();
+  }
+  else{
     playerPattern = [];
-    setTimeout(playGame, 500);
+    setTimeout(playGame, 750);
   }
 }
 function yellowPlay(){
   yellow.play();
   game[3].classList.add("selected");
-  setTimeout(()=>{game[3].classList.remove("selected");}, 500);
+  setTimeout(()=>{game[3].classList.remove("selected");}, 750);
   playerPattern.push(game[3].name);
   console.log(`player pattern: ${playerPattern}`);
   console.log(`game pattern: ${gamePattern}`);
@@ -112,13 +115,13 @@ function yellowPlay(){
   }
   else{
     playerPattern = [];
-    setTimeout(playGame, 500);
+    setTimeout(playGame, 750);
   }
 }
 function bluePlay(){
   blue.play();
   game[4].classList.add("selected");
-  setTimeout(()=>{game[4].classList.remove("selected");}, 500);
+  setTimeout(()=>{game[4].classList.remove("selected");}, 750);
   playerPattern.push(game[4].name);
   console.log(`player pattern: ${playerPattern}`);
   console.log(`game pattern: ${gamePattern}`);
@@ -130,7 +133,7 @@ function bluePlay(){
   }
   else{
     playerPattern = [];
-    setTimeout(playGame, 500);
+    setTimeout(playGame, 750);
   }
 }
 
@@ -146,7 +149,7 @@ function playGame(){
     console.log(game[val].name);
     setTimeout(()=>{
       game[val].classList.remove("selected");
-    }, 500); //remove classList
+    }, 750); //remove classList
 
     gamePattern.push(game[val].name);
 }
