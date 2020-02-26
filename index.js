@@ -34,14 +34,14 @@ else if last value is ==  and  play pattern < game pattern
   if one value isn't equal, reset everything and alert("Click to try again");
   */
   //Test gP = 4  pP = 1
-  if(playerPattern.length <= gamePattern.length){
+
     for(var i=playerPattern.length-1; i<playerPattern.length; i++){
         if(playerPattern[i] !== gamePattern[i]){
           patternMatch = false;
           return patternMatch;
         }
     }
-  }
+
   return patternMatch;
 
 }
@@ -53,6 +53,7 @@ function endGame(){
   setTimeout(alert("Play again?"), 1000);
   gamePattern = [];
   playerPattern = [];
+  //inc = 0;
   game[0].classList.remove("hide");
 }
 
@@ -73,8 +74,12 @@ function greenPlay(){
   */
   if(!checkAll()){
     endGame();
-  }else{
-    playGame();
+  }else if(playerPattern.length < gamePattern.length){
+    checkAll();
+  }
+  else{
+    playerPattern = [];
+    setTimeout(playGame, 500);
   }
 }
 function redPlay(){
@@ -88,7 +93,8 @@ function redPlay(){
   if(!checkAll()){
     endGame();
   }else{
-    playGame();
+    playerPattern = [];
+    setTimeout(playGame, 500);
   }
 }
 function yellowPlay(){
@@ -101,8 +107,12 @@ function yellowPlay(){
 
   if(!checkAll()){
     endGame();
-  }else{
-    playGame();
+  }else if(playerPattern.length < gamePattern.length){
+    checkAll();
+  }
+  else{
+    playerPattern = [];
+    setTimeout(playGame, 500);
   }
 }
 function bluePlay(){
@@ -115,16 +125,20 @@ function bluePlay(){
 
   if(!checkAll()){
     endGame();
-  }else{
-    playGame();
+  }else if(playerPattern.length < gamePattern.length){
+    checkAll();
+  }
+  else{
+    playerPattern = [];
+    setTimeout(playGame, 500);
   }
 }
 
 function playGame(){
 //call this everytime
-  if(gamePattern.length === playerPattern.lenght && checkAll()){
+
     title.innerText = `Level ${++inc}`;
-  }
+
     val = getRandomNum(); //first number selected
     btnValues.push(val);
     game[val].classList.add("selected");//change to a temp flash
