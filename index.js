@@ -50,7 +50,7 @@ function endGame(){
   gameScreen.classList.add("selected");
   setTimeout(()=>{gameScreen.classList.remove("selected")}, 1000);
   title.innerText = "Game Over 🎮";
-  setTimeout(alert(`Your score: ${inc*1000}\n Play again?`), 1000);
+  setTimeout(alert(`Your score: ${(inc-1)*1000}\n Play again?`), 1000);
   gamePattern = [];
   playerPattern = [];
   inc = 0;
