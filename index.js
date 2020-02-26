@@ -6,8 +6,11 @@ let yellow = new Audio("../Simon/public/sounds/yellow.mp3");
 let red = new Audio("../Simon/public/sounds/red.mp3");
 let green = new Audio("../Simon/public/sounds/green.mp3");
 let wrong = new Audio("../Simon/public/sounds/wrong.mp3");
+let title = document.querySelector("h1");
+let gameScreen = document.querySelector("html");
 let inc = 0;
-let patternMatch = true;
+let val = 0;
+let isMatched = true;
 const playBtns = [green, red, yellow, blue];
 let btnValues = [];
 let gamePattern = [];
@@ -16,19 +19,41 @@ function getRandomNum(){
   return Math.floor((Math.random() * 4) + 1);
 }
 function checkAll(){
-  //create a checkAll method!
-    for(var i=0; i<playerPattern.length; i++){
-      if(gamePattern[i] !== playerPattern[i]){
-        document.querySelector("html").classList.add("selected");
-        wrong.play();
-        gamePattern = [];
-        playerPattern = [];
-        game[0].classList.remove("hide");
-      }
-    }//After it checks all and they match, empty playerPattern play again
+  var patternMatch = true;
+  /*
+  return a boolean
+  just check the entire pattern matches
+  check up to length of playerPattern
+  pass function inside a while loop
+on click -- if checkAll returns false -- trigger game over and resetGame
+else if last value is ==  and  play pattern < game pattern
+    --trigger nothing and let them continue
+    else (both are full and all match) -- trigger another button, reset playerPattern
+  it's not going to play a new button until
+  playerPattern.lenth = gamePattern.length and all values are equal
+  if one value isn't equal, reset everything and alert("Click to try again");
+  */
+  //Test gP = 4  pP = 1
+  if(playerPattern.length <= gamePattern.length){
+    for(var i=playerPattern.length-1; i<playerPattern.length; i++){
+        if(playerPattern[i] !== gamePattern[i]){
+          patternMatch = false;
+          return patternMatch;
+        }
+    }
+  }
+  return patternMatch;
 
-    playGame();
-
+}
+function endGame(){
+  wrong.play();
+  gameScreen.classList.add("selected");
+  setTimeout(()=>{gameScreen.classList.remove("selected")}, 500);
+  title.innerText = "Game Over 🎮";
+  setTimeout(alert("Play again?"), 1000);
+  gamePattern = [];
+  playerPattern = [];
+  game[0].classList.remove("hide");
 }
 
 function greenPlay(){
@@ -36,8 +61,8 @@ function greenPlay(){
   game[1].classList.add("selected");
   setTimeout(()=>{game[1].classList.remove("selected");}, 500);
   playerPattern.push(game[1].name);
-  console.log(playerPattern);
-  console.log(gamePattern);
+  console.log(`player pattern: ${playerPattern}`);
+  console.log(`game pattern: ${gamePattern}`);
 
   /*button pressed: create separate fun, pass to each play function
   -while with boolean match checker
@@ -46,64 +71,61 @@ function greenPlay(){
   -the prompt button only triggers once per round
   --gamePattern = [red, green]
   */
-  checkAll();
-
-
-
-  // if(playerPattern[inc] === gamePattern[inc]){
-  //   alert("You got it son!");
-  // }else{
-  //   alert("But you're wrong...");
-  // }
+  if(!checkAll()){
+    endGame();
+  }else{
+    playGame();
+  }
 }
 function redPlay(){
   red.play();
   game[2].classList.add("selected");
   setTimeout(()=>{game[2].classList.remove("selected");}, 500);
   playerPattern.push(game[2].name);
-  console.log(playerPattern);
-  console.log(gamePattern);
-  checkAll();
-  // if(playerPattern[inc] === gamePattern[inc]){
-  //   startGame();
-  //   inc++;
-  // }else{
-  //     wrong.play();
-  // }
+  console.log(`player pattern: ${playerPattern}`);
+  console.log(`game pattern: ${gamePattern}`);
+
+  if(!checkAll()){
+    endGame();
+  }else{
+    playGame();
+  }
 }
 function yellowPlay(){
   yellow.play();
   game[3].classList.add("selected");
   setTimeout(()=>{game[3].classList.remove("selected");}, 500);
   playerPattern.push(game[3].name);
-  console.log(playerPattern);
-  console.log(gamePattern);
-  checkAll();
-  // if(playerPattern[inc] === gamePattern[inc]){
-  //   alert("You got it son!");
-  // }else{
-  //   alert("But you're wrong...");
-  // }
+  console.log(`player pattern: ${playerPattern}`);
+  console.log(`game pattern: ${gamePattern}`);
+
+  if(!checkAll()){
+    endGame();
+  }else{
+    playGame();
+  }
 }
 function bluePlay(){
   blue.play();
   game[4].classList.add("selected");
   setTimeout(()=>{game[4].classList.remove("selected");}, 500);
   playerPattern.push(game[4].name);
-  console.log(playerPattern);
-  console.log(gamePattern);
+  console.log(`player pattern: ${playerPattern}`);
+  console.log(`game pattern: ${gamePattern}`);
 
-  checkAll();
-  // if(playerPattern[inc] === gamePattern[inc]){
-  //   alert("You got it son!");
-  // }else{
-  //   alert("But you're wrong...");
-  // }
+  if(!checkAll()){
+    endGame();
+  }else{
+    playGame();
+  }
 }
 
 function playGame(){
 //call this everytime
-    let val = getRandomNum(); //first number selected
+  if(gamePattern.length === playerPattern.lenght && checkAll()){
+    title.innerText = `Level ${++inc}`;
+  }
+    val = getRandomNum(); //first number selected
     btnValues.push(val);
     game[val].classList.add("selected");//change to a temp flash
     playBtns[val-1].play();
@@ -116,7 +138,14 @@ function playGame(){
 }
 function startGame(){//start game button triggers this function
   game[0].classList.add("hide");
-  setTimeout(playGame, 500 );
+  setTimeout(playGame, 500);
+}
+
+function resetGame(){
+  title.innerText = "Play Again";
+  game[0].classList.remove("hide");
+  gamePattern = [];
+  playerPattern = [];
 }
 
 
