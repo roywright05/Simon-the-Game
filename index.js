@@ -1,11 +1,11 @@
 //jshint esversion: 6
 
 let game = document.querySelectorAll("button"); //an array
-let blue = new Audio("../Simon/public/sounds/blue.mp3");
-let yellow = new Audio("../Simon/public/sounds/yellow.mp3");
-let red = new Audio("../Simon/public/sounds/red.mp3");
-let green = new Audio("../Simon/public/sounds/green.mp3");
-let wrong = new Audio("../Simon/public/sounds/wrong.mp3");
+let blue = new Audio("./public/sounds/blue.mp3");
+let yellow = new Audio("./public/sounds/yellow.mp3");
+let red = new Audio("./public/sounds/red.mp3");
+let green = new Audio("./public/sounds/green.mp3");
+let wrong = new Audio("./public/sounds/wrong.mp3");
 let title = document.querySelector("h1");
 let gameScreen = document.querySelector("html");
 let inc = 0;
